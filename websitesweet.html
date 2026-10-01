@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sweet 18 — Lukas × Remi</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #050505;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: rgba(255,255,255,0.06);
+            filter: blur(120px);
+            border-radius: 50%;
+            top: -200px;
+            left: -200px;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            background: rgba(255,255,255,0.04);
+            filter: blur(120px);
+            border-radius: 50%;
+            bottom: -200px;
+            right: -150px;
+            pointer-events: none;
+        }
+
+        /* LOADER */
+
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: #050505;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: loaderOut 1s ease forwards;
+            animation-delay: 1.2s;
+        }
+
+        .loader-text {
+            font-size: 14px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse {
+            from {
+                opacity: 0.3;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes loaderOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            animation: fadeUp 1s ease;
+        }
+
+        .small-title {
+            font-size: 12px;
+            letter-spacing: 7px;
+            text-transform: uppercase;
+            color: #aaa;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: clamp(55px, 12vw, 120px);
+            line-height: 0.9;
+            letter-spacing: -5px;
+            font-weight: 800;
+        }
+ 
+        h1 span {
+            color: #aaa;
+        }
+
+        .hero-subtitle {
+            margin-top: 30px;
+            font-size: 17px;
+            color: #aaa;
+            letter-spacing: 2px;
+        }
+
+        .hero-date {
+            margin-top: 15px;
+            font-size: 15px;
+            letter-spacing: 3px;
+        }
+
+        .scroll-button {
+            display: inline-block;
+            margin-top: 45px;
+            padding: 15px 30px;
+            border: 1px solid #555;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .scroll-button:hover {
+            background: white;
+            color: black;
+            transform: translateY(-3px);
+        }
+
+        /* GENERAL */
+
+        section {
+            width: min(1000px, 92%);
+            margin: auto;
+            padding: 90px 0;
+        }
+
+        .section-title {
+            font-size: 35px;
+            margin-bottom: 40px;
+            letter-spacing: -1px;
+        }
+
+        /* INFO */
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .info-card {
+            border: 1px solid #242424;
+            background: rgba(255,255,255,0.025);
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            border-color: #555;
+        }
+
+        .info-icon {
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        .info-label {
+            color: #777;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            font-size: 17px;
+        }
+
+        /* COUNTDOWN */
+
+        .countdown-section {
+            text-align: center;
+        }
+
+        .countdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .time-box {
+            border: 1px solid #292929;
+            border-radius: 18px;
+            padding: 25px 10px;
+            background: rgba(255,255,255,0.025);
+        }
+
+        .time-number {
+            font-size: clamp(28px, 6vw, 55px);
+            font-weight: bold;
+        }
+
+        .time-label {
+            color: #777;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 5px;
+        }
+
+        /* VIP */
+
+        .vip-box {
+            border: 1px solid #444;
+            border-radius: 30px;
+            padding: 45px 30px;
+            background: linear-gradient(
+                135deg,
+                rgba(255,255,255,0.07),
+                rgba(255,255,255,0.015)
+            );
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .vip-box::before {
+            content: "VIP";
+            position: absolute;
+            font-size: 180px;
+            font-weight: bold;
+            color: rgba(255,255,255,0.025);
+            right: -30px;
+            bottom: -40px;
+            pointer-events: none;
+        }
+
+        .vip-title {
+            font-size: 40px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .vip-description {
+            color: #999;
+            margin-bottom: 30px;
+        }
+
+        /* FORM */
+
+        .form {
+            max-width: 500px;
+            margin: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .input {
+            width: 100%;
+            padding: 17px 18px;
+            margin-bottom: 12px;
+            background: #0d0d0d;
+            border: 1px solid #303030;
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .input:focus {
+            border-color: #777;
+        }
+
+        .vip-button {
+            width: 100%;
+            padding: 18px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 12px;
+            background: white;
+            color: black;
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .vip-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+        }
+
+        /* TICKET */
+
+        .ticket {
+            display: none;
+            max-width: 600px;
+            margin: 30px auto 0;
+            background: #f5f5f5;
+            color: #080808;
+            border-radius: 20px;
+            padding: 35px;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ticket::after {
+            content: "VIP";
+            position: absolute;
+            right: -20px;
+            top: 20px;
+            font-size: 100px;
+            font-weight: bold;
+            color: rgba(0,0,0,0.04);
+        }
+
+        .ticket-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .ticket-logo {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .ticket-vip {
+            font-size: 12px;
+            letter-spacing: 3px;
+            font-weight: bold;
+        }
+
+        .ticket-name {
+            font-size: 35px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .ticket-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .ticket-detail-label {
+            font-size: 10px;
+            color: #777;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .ticket-detail-value {
+            font-size: 15px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        .ticket-code {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed #aaa;
+            font-family: monospace;
+            letter-spacing: 4px;
+        }
+
+        /* LOCATION */
+
+        .location {
+            display: block;
+            color: white;
+            text-decoration: none;
+            border: 1px solid #252525;
+            border-radius: 25px;
+            padding: 35px;
+            background: rgba(255,255,255,0.025);
+            transition: 0.3s;
+        }
+
+        .location:hover {
+            border-color: #666;
+            transform: translateY(-4px);
+        }
+
+        .location-name {
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .location-text {
+            color: #888;
+            margin-top: 10px;
+        }
+
+        .location-button {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 20px;
+            border: 1px solid #555;
+            border-radius: 50px;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: #555;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        /* ANIMATION */
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
+            section {
+                padding: 65px 0;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .countdown {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .vip-box {
+                padding: 35px 18px;
+            }
+
+            .ticket {
+                padding: 25px;
+            }
+
+            .ticket-details {
+                grid-template-columns: 1fr;
+            }
+
+            .ticket-name {
+                font-size: 28px;
+            }
+
+            h1 {
+                letter-spacing: -3px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- LOADER -->
+
+<div class="loader">
+    <div class="loader-text">Lukas × Remi</div>
+</div>
+
+
+<!-- HERO -->
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <div class="small-title">
+            You're invited
+        </div>
+
+        <h1>
+            SWEET<br>
+            <span>18</span>
+        </h1>
+
+        <div class="hero-subtitle">
+            LUKAS × REMI
+        </div>
+
+        <div class="hero-date">
+            31.10.2026 · 19:00
+        </div>
+
+        <a href="#vip" class="scroll-button">
+            GET YOUR VIP ACCESS
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- INFO -->
+
+<section class="reveal">
+
+    <div class="section-title">
+        THE NIGHT
+    </div>
+
+    <div class="info-grid">
+
+        <div class="info-card">
+
+            <div class="info-icon">📅</div>
+
+            <div class="info-label">
+                Date
+            </div>
+
+            <div class="info-value">
+                31 oktober 2026
+            </div>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">🕖</div>
+
+            <div class="info-label">
+                Start
+            </div>
+
+            <div class="info-value">
+                19:00
+            </div>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <div class="info-icon">📍</div>
+
+            <div class="info-label">
+                Location
+            </div>
+
+            <div class="info-value">
+                Beverhuys
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- COUNTDOWN -->
+
+<section class="countdown-section reveal">
+
+    <div class="section-title">
+        COUNTDOWN
+    </div>
+
+    <div class="countdown">
+
+        <div class="time-box">
+            <div id="days" class="time-number">00</div>
+            <div class="time-label">Days</div>
+        </div>
+
+        <div class="time-box">
+            <div id="hours" class="time-number">00</div>
+            <div class="time-label">Hours</div>
+        </div>
+
+        <div class="time-box">
+            <div id="minutes" class="time-number">00</div>
+            <div class="time-label">Minutes</div>
+        </div>
+
+        <div class="time-box">
+            <div id="seconds" class="time-number">00</div>
+            <div class="time-label">Seconds</div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- VIP -->
+
+<section id="vip" class="reveal">
+
+    <div class="vip-box">
+
+        <div class="vip-title">
+            VIP ACCESS
+        </div>
+
+        <div class="vip-description">
+            Vul je gegevens in en maak jouw persoonlijke VIP-ticket.
+        </div>
+
+
+        <form id="vipForm" class="form">
+
+            <input
+                id="firstName"
+                class="input"
+                type="text"
+                placeholder="Voornaam"
+                required
+            >
+
+            <input
+                id="lastName"
+                class="input"
+                type="text"
+                placeholder="Achternaam"
+                required
+            >
+
+            <input
+                id="email"
+                class="input"
+                type="email"
+                placeholder="E-mailadres"
+                required
+            >
+
+            <button class="vip-button" type="submit">
+                GENERATE MY VIP TICKET
+            </button>
+
+        </form>
+
+
+        <!-- PERSONAL TICKET -->
+
+        <div id="ticket" class="ticket">
+
+            <div class="ticket-top">
+
+                <div class="ticket-logo">
+                    SWEET 18
+                </div>
+
+                <div class="ticket-vip">
+                    VIP ACCESS
+                </div>
+
+            </div>
+
+
+            <div id="ticketName" class="ticket-name">
+                Your Name
+            </div>
+
+
+            <div class="ticket-details">
+
+                <div>
+                    <div class="ticket-detail-label">
+                        Event
+                    </div>
+
+                    <div class="ticket-detail-value">
+                        Lukas × Remi
+                    </div>
+                </div>
+
+
+                <div>
+                    <div class="ticket-detail-label">
+                        Date
+                    </div>
+
+                    <div class="ticket-detail-value">
+                        31 October 2026
+                    </div>
+                </div>
+
+
+                <div>
+                    <div class="ticket-detail-label">
+                        Time
+                    </div>
+
+                    <div class="ticket-detail-value">
+                        19:00
+                    </div>
+                </div>
+
+
+                <div>
+                    <div class="ticket-detail-label">
+                        Location
+                    </div>
+
+                    <div class="ticket-detail-value">
+                        Beverhuys
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="ticket-code">
+                VIP-<span id="ticketCode"></span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- LOCATION -->
+
+<section class="reveal">
+
+    <div class="section-title">
+        LOCATION
+    </div>
+
+    <a
+        class="location"
+        href="https://www.google.com/maps/search/?api=1&query=Beverhuys%20Roeselare"
+        target="_blank"
+    >
+
+        <div class="location-name">
+            Beverhuys
+        </div>
+
+        <div class="location-text">
+            Roeselare, België
+        </div>
+
+        <div class="location-button">
+            OPEN IN GOOGLE MAPS →
+        </div>
+
+    </a>
+
+</section>
+
+
+<footer>
+    SWEET 18 · LUKAS × REMI · 2026
+</footer>
+
+
+<script>
+
+    /* =========================
+       COUNTDOWN
+    ========================= */
+
+    const eventDate = new Date(
+        "October 31, 2026 21:00:00"
+    ).getTime();
+
+
+    function updateCountdown() {
+
+        const now = new Date().getTime();
+
+        const difference = eventDate - now;
+
+
+        if (difference <= 0) {
+
+            document.getElementById("days").innerText = "00";
+            document.getElementById("hours").innerText = "00";
+            document.getElementById("minutes").innerText = "00";
+            document.getElementById("seconds").innerText = "00";
+
+            return;
+        }
+
+
+        const days = Math.floor(
+            difference / (1000 * 60 * 60 * 24)
+        );
+
+        const hours = Math.floor(
+            (difference / (1000 * 60 * 60)) % 24
+        );
+
+        const minutes = Math.floor(
+            (difference / (1000 * 60)) % 60
+        );
+
+        const seconds = Math.floor(
+            (difference / 1000) % 60
+        );
+
+
+        document.getElementById("days").innerText =
+            String(days).padStart(2, "0");
+
+        document.getElementById("hours").innerText =
+            String(hours).padStart(2, "0");
+
+        document.getElementById("minutes").innerText =
+            String(minutes).padStart(2, "0");
+
+        document.getElementById("seconds").innerText =
+            String(seconds).padStart(2, "0");
+    }
+
+
+    updateCountdown();
+
+    setInterval(updateCountdown, 1000);
+
+
+    /* =========================
+       VIP TICKET
+    ========================= */
+
+    document
+        .getElementById("vipForm")
+        .addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+
+            const firstName =
+                document.getElementById("firstName").value.trim();
+
+            const lastName =
+                document.getElementById("lastName").value.trim();
+
+            const email =
+                document.getElementById("email").value.trim();
+
+
+            if (!firstName || !lastName || !email) {
+                return;
+            }
+
+
+            /* Name on ticket */
+
+            document.getElementById("ticketName").innerText =
+                firstName + " " + lastName;
+
+
+            /* Create simple VIP code */
+
+            const randomNumber =
+                Math.floor(10000 + Math.random() * 90000);
+
+            document.getElementById("ticketCode").innerText =
+                randomNumber;
+
+
+            /* Hide form */
+
+            document.getElementById("vipForm").style.display =
+                "none";
+
+
+            /* Show ticket */
+
+            const ticket =
+                document.getElementById("ticket");
+
+            ticket.style.display = "block";
+
+
+            /* Smooth scroll to ticket */
+
+            setTimeout(function() {
+
+                ticket.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+            }, 100);
+
+
+            /* Save locally */
+
+            localStorage.setItem(
+                "sweet18_firstName",
+                firstName
+            );
+
+            localStorage.setItem(
+                "sweet18_lastName",
+                lastName
+            );
+
+            localStorage.setItem(
+                "sweet18_email",
+                email
+            );
+
+        });
+
+
+    /* =========================
+       SCROLL ANIMATIONS
+    ========================= */
+
+    const observer =
+        new IntersectionObserver(
+            function(entries) {
+
+                entries.forEach(function(entry) {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add("visible");
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.15
+            }
+        );
+
+
+    document
+        .querySelectorAll(".reveal")
+        .forEach(function(element) {
+
+            observer.observe(element);
+
+        });
+
+
+    /* =========================
+       LOAD PREVIOUS TICKET
+    ========================= */
+
+    const savedFirstName =
+        localStorage.getItem("sweet18_firstName");
+
+    const savedLastName =
+        localStorage.getItem("sweet18_lastName");
+
+
+    if (savedFirstName && savedLastName) {
+
+        document.getElementById("ticketName").innerText =
+            savedFirstName + " " + savedLastName;
+
+    }
+
+</script>
+
+</body>
+</html>
